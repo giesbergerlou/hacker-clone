@@ -6,3 +6,5 @@ export const ENDPOINTS: Record<string, string> = {
     show: 'showtstories.json',
     job: 'jobstories.json'
 };
+
+export const PAGE_SIZE: number = 10;

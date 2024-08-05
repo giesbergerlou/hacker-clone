@@ -1,0 +1,13 @@
+.navigation {
+  width: 100%;
+  padding: 1rem 10rem;
+  background-color: #610961; }
+  .navigation ul {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+    list-style: none; }
+  .navigation a {
+    color: white;
+    text-decoration: none; }

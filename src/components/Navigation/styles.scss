@@ -1,0 +1,18 @@
+.navigation {
+    width: 100%;
+    padding: 1rem 10rem;
+    background-color: rgb(97, 9, 97);
+
+    ul {
+        width: 100%;
+        display: flex;
+        gap: 5px;
+        justify-content: space-between;
+        list-style: none;
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
+}
