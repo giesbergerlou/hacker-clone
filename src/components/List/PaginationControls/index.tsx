@@ -1,14 +1,17 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 
 interface Props {
-    onClickNext: () => Promise<void>
-    onClickPrevious: () => Promise<void>
+    onClickNext: () => Promise<void>;
+    onClickPrevious: () => Promise<void>;
+    page: number;
+    totalPages: number;
 }
 
-const PaginationControls: React.FunctionComponent<Props> = ({ onClickNext, onClickPrevious }) => {
+const PaginationControls: React.FunctionComponent<Props> = ({ onClickNext, onClickPrevious, page, totalPages }) => {
     return (
-        <div>
+        <div className="pagination-controls">
             <button onClick={() => onClickPrevious()}>last page</button>
+            <p>{page} / {totalPages}</p>
             <button onClick={() => onClickNext()}>next page</button>
         </div>
     );

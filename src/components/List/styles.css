@@ -4,23 +4,51 @@
   justify-content: space-between;
   gap: 5px;
   width: 100%;
-  height: 90%;
+  min-height: 90vh;
+  max-height: 90vh;
   padding: 2rem 10rem; }
-  .list .list-item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 1rem;
-    text-align: start;
-    gap: 5px; }
-    .list .list-item .title-container {
-      display: inline-flex;
-      gap: 4px; }
-    .list .list-item .info-container {
-      display: flex;
-      justify-content: space-between;
-      gap: 4px;
-      font-size: 12px; }
-    .list .list-item a {
-      text-decoration: none;
-      color: white; }
+
+.list .list-item {
+  display: flex;
+  font-size: 1rem;
+  text-align: start;
+  gap: 5px; }
+
+.list .list-item .score-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15px;
+  min-width: 4rem; }
+
+.list .list-item .item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; }
+
+.list .list-item .item-container .title-container {
+  display: inline-flex;
+  gap: 4px; }
+
+.list .list-item .item-container .info-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 12px; }
+
+.list .list-item .item-container a {
+  text-decoration: none;
+  color: white; }
+
+.list .pagination-controls {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px;
+  width: auto;
+  color: white;
+  font-size: 1rem; }
+
+.list .pagination-controls button {
+  padding: 10px;
+  border: lightgray 1px; }

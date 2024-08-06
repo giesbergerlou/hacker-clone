@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { isEqual } from "lodash-es";
+import { useCallback, useState } from "react";
+import { useCustomCompareEffect } from "use-custom-compare";
+import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 
 // Components
 import ListItem from "./ListItem";
+import LoadingState from "../LoadingState";
+import PaginationControls from "./PaginationControls";
 
 // Helpers
 import { fetchAllItemIds, fetchItem } from "../../helpers/api";
@@ -14,7 +19,6 @@ import './styles.css';
 
 // Constants
 import { PAGE_SIZE } from "../../constants";
-import PaginationControls from "./PaginationControls";
 
 interface Props {
     tab: string;
@@ -25,27 +29,8 @@ const List: React.FunctionComponent<Props> = ({ tab }) => {
     const [error, setError] = useState<string | null>(null);
     const [ids, setIds] = useState<number[]>([]);
     const [items, setItems] = useState<ApiItem[]>([]);
-    const [page, setPage] = useState<number>(1);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const itemIds = await fetchAllItemIds(tab);
-
-                setIds(itemIds);
-
-                const initialPageItems = await fetchPageItems(ids, 0);
-                setItems(initialPageItems);
-            } catch (error: any) {
-                setError(error.message);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-
-        fetchData();
-    }, [ids, tab]);
-
+    const [page, setPage] = useQueryParam('page', withDefault(NumberParam, 1));
+    
     const fetchPageItems = useCallback(async (ids: number[], page: number) => {
         const start = page * PAGE_SIZE;
         const end = start + PAGE_SIZE;
@@ -54,49 +39,58 @@ const List: React.FunctionComponent<Props> = ({ tab }) => {
         const items = await Promise.all(itemsPromises);
 
         return items;
-      }, [page]);
+    }, []);
+
+    useCustomCompareEffect(() => {
+        const fetchData = async () => {
+            try {
+                const itemIds = await fetchAllItemIds(tab);
+                setIds(itemIds);
+
+                const pageItems = await fetchPageItems(ids, page);
+                setItems(pageItems);
+            } catch (error: any) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchData();
+    }, [page, fetchPageItems, ids], isEqual);
+
     
-      const handleClickNextPage = async () => {
+    const handleClickNextPage = useCallback(async () => {
         setIsLoading(true);
 
         const nextPage = page + 1;
         setPage(nextPage);
+    }, [page, setPage]);
 
-        try {
-          const nextPageItems = await fetchPageItems(ids, nextPage);
-          setItems(nextPageItems);
-        } catch (error: any) {
-          setError(error.message);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-    const handleClickPreviousPage = async () => {
+    const handleClickPreviousPage = useCallback(async () => {
         setIsLoading(true);
 
         const previousPage = page - 1;
         setPage(previousPage);
+    }, [page, setPage]);
 
-        try {
-            const previousPageItems = await fetchPageItems(ids, previousPage);
-            setItems(previousPageItems);
-        } catch (error: any) {
-            setError(error.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-    
-      if (isLoading && items.length === 0) return <div>Loading...</div>;
-      if (error) return <div>Error: {error}</div>;
+    if (isLoading) {
+        return <LoadingState />;
+    }
+
+
+    if (error) {
+        return <div>Error...</div>
+    }
+
+    console.log('rendering')
 
     return (
         <div className="list">
             {items.map((item, index) => {
                 return <ListItem key={index} item={item} index={index} />;
             })}
-            <PaginationControls onClickNext={handleClickNextPage} onClickPrevious={handleClickPreviousPage} />
+            <PaginationControls onClickNext={handleClickNextPage} onClickPrevious={handleClickPreviousPage} page={page} totalPages={ids.length / PAGE_SIZE}/>
         </div>
     );
 }

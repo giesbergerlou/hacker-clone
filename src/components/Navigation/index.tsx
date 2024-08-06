@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // Helpers
-import { createPaths } from "./helpers";
+import { createPaths } from "../../helpers/routes";
 
 // Styles
 import './styles.css'
