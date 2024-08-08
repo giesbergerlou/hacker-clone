@@ -22,13 +22,13 @@ const App: React.FunctionComponent = () => {
             <Route path="*" element={<ErrorState message="Page not found" icon={faMagnifyingGlass} />} />
             <Route path="/" key={0} element={<List tab='default'/>} />
             {createPaths().slice(1).map((path, index) => {
-              return <Route path={path} key={index + 1} element={<List tab={path}/>} />
+              return <Route path={path} key={index + 1} element={<List tab={path}/>} />;
             })}
           </Routes>
         </div>
       </QueryParamProvider>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

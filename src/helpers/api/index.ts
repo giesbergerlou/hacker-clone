@@ -44,4 +44,4 @@ const fetchItem = async (id: number): Promise<ApiItem> => {
     }
 
     return response.json();
-}
+};

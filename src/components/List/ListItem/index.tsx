@@ -6,10 +6,9 @@ import { getDomainName, getRelativeTime } from "./helpers";
 
 interface Props {
     item: ApiItem;
-    index: number;
 }
 
-const ListItem: React.FunctionComponent<Props> = ({ item, index }) => {
+const ListItem: React.FunctionComponent<Props> = ({ item }) => {
     return (
         <React.Fragment>
             <div className="list-item">
@@ -31,6 +30,6 @@ const ListItem: React.FunctionComponent<Props> = ({ item, index }) => {
             </div>
         </React.Fragment>
     );
-}
+};
 
 export default ListItem;

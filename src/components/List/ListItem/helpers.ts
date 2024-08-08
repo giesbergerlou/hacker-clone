@@ -1,5 +1,5 @@
 
-import { formatDistanceToNow } from "date-fns"
+import { formatDistanceToNow } from "date-fns";
 
 export const getRelativeTime = (timestamp: number): string => {
     return formatDistanceToNow(new Date(timestamp * 1000), { addSuffix: false });

@@ -18,7 +18,7 @@ const ErrorState: React.FunctionComponent<Props> = ({ message, icon }) => {
             </div>}
             <div className="message">{message}</div>
         </div>
-    )
+    );
 };
 
 export default ErrorState;

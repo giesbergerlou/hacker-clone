@@ -1,10 +1,12 @@
+import React, { useCallback, useState } from "react";
 import { isEqual } from "lodash-es";
-import { useCallback, useState } from "react";
 import { useCustomCompareEffect } from "use-custom-compare";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 
 // Components
 import ListItem from "./ListItem";
+import ErrorState from "../ErrorState";
 import LoadingState from "../LoadingState";
 import PaginationControls from "./PaginationControls";
 
@@ -15,9 +17,7 @@ import { fetchAllItemIds, fetchPageItems } from "../../helpers/api";
 import { ApiItem } from "../../types/api";
 
 // Styles
-import './styles.css';
-import ErrorState from "../ErrorState";
-import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import "./styles.css";
 
 interface Props {
     tab: string;
@@ -43,12 +43,12 @@ const List: React.FunctionComponent<Props> = ({ tab }) => {
                 // TODO: figure out what to do when a user enters a non-existent page number in the URL query parameters, like -5 or a number greater than max page count
                 const pageItems = await fetchPageItems(ids, page);
                 setItems(pageItems);
-            } catch (error: any) {
+            } catch (error: any) {  // eslint-disable-line @typescript-eslint/no-explicit-any
                 setError(error.message);
             } finally {
                 setIsLoading(false);
             }
-        }
+        };
 
         fetchData();
     }, [tab, page, fetchPageItems, ids], isEqual);
@@ -66,17 +66,17 @@ const List: React.FunctionComponent<Props> = ({ tab }) => {
     }
 
     if (!items.length) {
-        return <ErrorState message={'We were unable to find any items to show you here.'} />
+        return <ErrorState message={'We were unable to find any items to show you here.'} />;
     }
 
     return (
         <div className="list">
             {items.map((item, index) => {
-                return <ListItem key={index} item={item} index={index} />;
+                return <ListItem key={index} item={item} />;
             })}
             <PaginationControls onClickPage={handleClickPage} page={page} itemCount={ids.length}/>
         </div>
     );
-}
+};
 
 export default List;

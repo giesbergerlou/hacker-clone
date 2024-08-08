@@ -6,7 +6,7 @@ import { createPaths } from "../../helpers/routes";
 import { capitalizeFirstLetter } from "./helpers";
 
 // Styles
-import './styles.css'
+import "./styles.css";
 
 const Navigation: React.FunctionComponent = () => {
     return (
@@ -24,7 +24,7 @@ const Navigation: React.FunctionComponent = () => {
                                 return isActive ? 'active' : '';
                             })}>{capitalizeFirstLetter(path)}</NavLink>
                         </li>
-                    )
+                    );
                 })}
             </ul>
             <div>
