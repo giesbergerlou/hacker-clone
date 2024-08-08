@@ -1,18 +1,21 @@
 .list {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: 5px;
     width: 100%;
     min-height: 90vh;
     max-height: 90vh;
-    padding: 2rem 10rem;
+    padding: 2rem 5rem;
 
     .list-item {
         display: flex;
         font-size: 1rem;
         text-align: start;
         gap: 5px;
+        color: black;
+        border-bottom: 1px solid #eee;
+        padding: 1rem  5rem 1rem 0.5rem;
+        background-color: #fff;
 
         .score-container {
             display: flex;
@@ -20,6 +23,8 @@
             align-items: center;
             padding: 0 15px;
             min-width: 4rem;
+            font-weight: 700;
+            font-size: 1rem;
         }
 
         .item-container {
@@ -28,20 +33,25 @@
             align-items: flex-start;
 
             .title-container {
-                display: inline-flex;
-                gap: 4px;
+                font-size: 0.8rem;
+
+                a {
+                    text-decoration: none;
+                    color: black;
+                }
+
+                .domain-name {
+                    font-weight: 400;
+                    color: #9d9d9d;
+                }
             }
     
             .info-container {
                 display: flex;
                 justify-content: space-between;
                 gap: 4px;
-                font-size: 12px;
-            }
-    
-            a {
-                text-decoration: none;
-                color: white;
+                font-size: 0.7rem;
+                color: #9d9d9d;
             }
         }
 
@@ -50,15 +60,25 @@
     .pagination-controls {
         display: flex;
         justify-content: center;
-        gap: 5px;
+        align-items: center;
+        gap: 15px;
         padding: 10px;
         width: auto;
-        color: white;
         font-size: 1rem;
+        line-height: 1rem;
+        color: black;
+    }
 
-        button {
-            padding: 10px;
-            border: lightgray 1px;
+    .icon {
+        cursor: pointer;
+
+        &.disabled {
+            color: #7d7d7d;
+            cursor: not-allowed;
         }
+    }
+
+    .icon:hover {
+        color: #d714d7;
     }
 }

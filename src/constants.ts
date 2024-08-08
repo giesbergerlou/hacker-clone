@@ -3,8 +3,8 @@ export const ENDPOINTS: Record<string, string> = {
     new: 'newstories.json',
     best: 'beststories.json',
     ask: 'askstories.json',
-    show: 'showtstories.json',
-    job: 'jobstories.json'
+    show: 'showstories.json',
+    jobs: 'jobstories.json'
 };
 
 export const PAGE_SIZE: number = 10;

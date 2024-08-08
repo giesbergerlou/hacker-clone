@@ -1,54 +1,60 @@
 .list {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 5px;
   width: 100%;
   min-height: 90vh;
   max-height: 90vh;
-  padding: 2rem 10rem; }
-
-.list .list-item {
-  display: flex;
-  font-size: 1rem;
-  text-align: start;
-  gap: 5px; }
-
-.list .list-item .score-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 15px;
-  min-width: 4rem; }
-
-.list .list-item .item-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; }
-
-.list .list-item .item-container .title-container {
-  display: inline-flex;
-  gap: 4px; }
-
-.list .list-item .item-container .info-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 4px;
-  font-size: 12px; }
-
-.list .list-item .item-container a {
-  text-decoration: none;
-  color: white; }
-
-.list .pagination-controls {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  padding: 10px;
-  width: auto;
-  color: white;
-  font-size: 1rem; }
-
-.list .pagination-controls button {
-  padding: 10px;
-  border: lightgray 1px; }
+  padding: 2rem 5rem; }
+  .list .list-item {
+    display: flex;
+    font-size: 1rem;
+    text-align: start;
+    gap: 5px;
+    color: black;
+    border-bottom: 1px solid #eee;
+    padding: 1rem  5rem 1rem 0.5rem;
+    background-color: #fff; }
+    .list .list-item .score-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 15px;
+      min-width: 4rem;
+      font-weight: 700;
+      font-size: 1rem; }
+    .list .list-item .item-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; }
+      .list .list-item .item-container .title-container {
+        font-size: 0.8rem; }
+        .list .list-item .item-container .title-container a {
+          text-decoration: none;
+          color: black; }
+        .list .list-item .item-container .title-container .domain-name {
+          font-weight: 400;
+          color: #9d9d9d; }
+      .list .list-item .item-container .info-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 4px;
+        font-size: 0.7rem;
+        color: #9d9d9d; }
+  .list .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    width: auto;
+    font-size: 1rem;
+    line-height: 1rem;
+    color: black; }
+  .list .icon {
+    cursor: pointer; }
+    .list .icon.disabled {
+      color: #7d7d7d;
+      cursor: not-allowed; }
+  .list .icon:hover {
+    color: #d714d7; }

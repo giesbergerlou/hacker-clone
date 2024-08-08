@@ -1,13 +1,16 @@
 .navigation {
     width: 100%;
     max-height: 10vh;
-    padding: 1rem 10rem;
-    background-color: rgb(97, 9, 97);
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 5rem;
+    background-color: #020420;
+    margin: 0 auto;
+    font-weight: 300;
 
     ul {
-        width: 100%;
         display: flex;
-        gap: 5px;
+        gap: 2rem;
         justify-content: space-between;
         list-style: none;
     }
@@ -15,5 +18,14 @@
     a {
         color: white;
         text-decoration: none;
+        font-size: 1rem;
+
+        &.active {
+            color: #d714d7;
+        }
+    }
+
+    a:hover {
+        color: #d714d7;
     }
 }

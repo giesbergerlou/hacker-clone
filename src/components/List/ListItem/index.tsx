@@ -14,14 +14,11 @@ const ListItem: React.FunctionComponent<Props> = ({ item, index }) => {
         <React.Fragment>
             <div className="list-item">
                 <div className="score-container">
-                    {/* TODO: Add upvote button */}
                     {item?.score}
                 </div>
                 <div className="item-container">
                     <div className="title-container">
-                        <h4 className="title"><a href={item?.url}>{item?.title}</a></h4>
-                        <p className="domain">{getDomainName(item.url)}</p>
-                        {/* TODO: Add domain name */}
+                        <a href={item?.url}>{item?.title}</a> <span className="domain-name">{getDomainName(item.url)}</span>
                     </div>
                     <div className="info-container">
                         <p>by {item?.by}</p>

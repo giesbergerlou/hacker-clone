@@ -9,16 +9,15 @@ import LoadingState from "../LoadingState";
 import PaginationControls from "./PaginationControls";
 
 // Helpers
-import { fetchAllItemIds, fetchItem } from "../../helpers/api";
+import { fetchAllItemIds, fetchPageItems } from "../../helpers/api";
 
 // Types
 import { ApiItem } from "../../types/api";
 
 // Styles
 import './styles.css';
-
-// Constants
-import { PAGE_SIZE } from "../../constants";
+import ErrorState from "../ErrorState";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     tab: string;
@@ -29,24 +28,19 @@ const List: React.FunctionComponent<Props> = ({ tab }) => {
     const [error, setError] = useState<string | null>(null);
     const [ids, setIds] = useState<number[]>([]);
     const [items, setItems] = useState<ApiItem[]>([]);
-    const [page, setPage] = useQueryParam('page', withDefault(NumberParam, 1));
-    
-    const fetchPageItems = useCallback(async (ids: number[], page: number) => {
-        const start = page * PAGE_SIZE;
-        const end = start + PAGE_SIZE;
-        const pageIds = ids.slice(start, end);
-        const itemsPromises = pageIds.map(id => fetchItem(id));
-        const items = await Promise.all(itemsPromises);
-
-        return items;
-    }, []);
+    const [page, setPage] = useQueryParam('page', withDefault(NumberParam, 1), {
+        removeDefaultsFromUrl: true
+    });
 
     useCustomCompareEffect(() => {
+        setIsLoading(true);
+
         const fetchData = async () => {
             try {
                 const itemIds = await fetchAllItemIds(tab);
                 setIds(itemIds);
 
+                // TODO: figure out what to do when a user enters a non-existent page number in the URL query parameters, like -5 or a number greater than max page count
                 const pageItems = await fetchPageItems(ids, page);
                 setItems(pageItems);
             } catch (error: any) {
@@ -57,40 +51,30 @@ const List: React.FunctionComponent<Props> = ({ tab }) => {
         }
 
         fetchData();
-    }, [page, fetchPageItems, ids], isEqual);
+    }, [tab, page, fetchPageItems, ids], isEqual);
 
-    
-    const handleClickNextPage = useCallback(async () => {
-        setIsLoading(true);
-
-        const nextPage = page + 1;
-        setPage(nextPage);
-    }, [page, setPage]);
-
-    const handleClickPreviousPage = useCallback(async () => {
-        setIsLoading(true);
-
-        const previousPage = page - 1;
-        setPage(previousPage);
-    }, [page, setPage]);
+    const handleClickPage = useCallback((pageNumber: number) => {
+        setPage(pageNumber);
+    }, [setPage]);
 
     if (isLoading) {
         return <LoadingState />;
     }
 
-
     if (error) {
-        return <div>Error...</div>
+        return <ErrorState message={error} icon={faCircleExclamation} />;
     }
 
-    console.log('rendering')
+    if (!items.length) {
+        return <ErrorState message={'We were unable to find any items to show you here.'} />
+    }
 
     return (
         <div className="list">
             {items.map((item, index) => {
                 return <ListItem key={index} item={item} index={index} />;
             })}
-            <PaginationControls onClickNext={handleClickNextPage} onClickPrevious={handleClickPreviousPage} page={page} totalPages={ids.length / PAGE_SIZE}/>
+            <PaginationControls onClickPage={handleClickPage} page={page} itemCount={ids.length}/>
         </div>
     );
 }
